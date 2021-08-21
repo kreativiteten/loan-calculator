@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -44,9 +45,24 @@ namespace loan_calculator
                 {
                     LoanContext loanContext = scope.ServiceProvider.GetService<LoanContext>();
 
+                    LoanTypeItem amortized = new LoanTypeItem {
+                        Name = "Amortized",
+                        EligibleLoanType = LoanType.AMORTIZED
+                    };
+                    LoanTypeItem serial = new LoanTypeItem {
+                        Name = "Serial",
+                        EligibleLoanType = LoanType.SERIAL
+                    };
+
+                    loanContext.LoanTypeItems.Add(amortized);
+                    loanContext.LoanTypeItems.Add(serial);
+
+                    loanContext.SaveChanges();
+
                     Loan sampleMortgage = new Loan {
                         Name ="House", 
                         Interest = 3.5, 
+                        EligibleLoanTypes = new HashSet<LoanTypeItem>() { amortized, serial },
                         IconUrl = "/icons/home.svg",
                         DefaultMonths = 120,
                         MinMonths = 6,
@@ -60,6 +76,7 @@ namespace loan_calculator
                     Loan sampleCarLoan = new Loan {
                         Name ="Car", 
                         Interest = 7, 
+                        EligibleLoanTypes = new HashSet<LoanTypeItem>() { amortized, serial },
                         IconUrl = "/icons/car.svg",
                         DefaultMonths = 60,
                         MinMonths = 6,
