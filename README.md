@@ -17,6 +17,8 @@ Then visit the page at [localhost:5001](https://localhost:5001).
 
 The app was created utilizing the [dotnet react app template](https://docs.microsoft.com/en-us/aspnet/core/client-side/spa/react?view=aspnetcore-5.0), which creates a project containing an api application along with a react frontend project.
 
+![Screenshot of app](/readme_images/loancalculator.JPG)
+
 
 ### Backend
 
