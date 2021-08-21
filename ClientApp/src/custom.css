@@ -1,0 +1,36 @@
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #E01A76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+
+.simple-graph {
+  display: flex;
+  min-height: 200px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.bar {
+  display: flex;
+  align-items: stretch;
+  flex: 1;
+  flex-direction: column;
+}
+
+.loan-button {
+  background-repeat: no-repeat;
+  background-position: 12px center;
+  min-width: 150px;
+  min-height: 75px;
+}
