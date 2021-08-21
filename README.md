@@ -1,6 +1,6 @@
 # Loan Calculator
 
-This is a simple loan calculator, although a full backend and react frontend is complete overkill for this app, it's made as per specifications to showcase programming abilities.
+This is a simple loan calculator.
 
 ## Running the application
 
@@ -17,9 +17,9 @@ Then visit the page at [localhost:5001](https://localhost:5001).
 
 The app was created utilizing the [dotnet react app template](https://docs.microsoft.com/en-us/aspnet/core/client-side/spa/react?view=aspnetcore-5.0), which creates a project containing an api application along with a react frontend project.
 
-![Screenshot of app](/readme_images/loancalculator.JPG)
+![Screenshot of app](/readme_images/screenshot.JPG)
 
-![Diagram of setup](/readme_images/diagram.png)
+![Diagram of setup](/readme_images/overview.png)
 
 ### Backend
 
