@@ -19,6 +19,7 @@ The app was created utilizing the [dotnet react app template](https://docs.micro
 
 ![Screenshot of app](/readme_images/loancalculator.JPG)
 
+![Diagram of setup](/readme_images/diagram.png)
 
 ### Backend
 
