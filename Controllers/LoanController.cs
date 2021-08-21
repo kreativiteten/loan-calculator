@@ -22,23 +22,28 @@ namespace loan_calculator.Controllers
 
         // GET: api/Loan
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Loan>>> GetLoans()
+        public async Task<ActionResult<IEnumerable<LoanDTO>>> GetLoans()
         {
-            return await _context.Loans.ToListAsync();
+            List<Loan> loans = await _context.Loans.Include(l => l.EligibleLoanTypes).ToListAsync();
+            List<LoanDTO> dtos = new List<LoanDTO>();
+            foreach(Loan l in loans)
+                dtos.Add(new LoanDTO(l));
+
+            return dtos;
         }
 
         // GET: api/Loan/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Loan>> GetLoan(long id)
+        public async Task<ActionResult<LoanDTO>> GetLoan(long id)
         {
-            var loan = await _context.Loans.FindAsync(id);
+            var loan = await _context.Loans.Include(l => l.EligibleLoanTypes).FirstAsync(loan => loan.Id == id);
 
             if (loan == null)
             {
                 return NotFound();
             }
 
-            return loan;
+            return new LoanDTO(loan);
         }
 
         // PUT: api/Loan/5

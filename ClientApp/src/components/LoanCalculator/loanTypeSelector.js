@@ -1,16 +1,18 @@
 import React from 'react';
 
-const loanTypeSelector = ({loans = [], onLoanSelected}) => {
+const loanTypeSelector = ({loan, onLoanTypeSelected}) => {
 
-  const loanBtns = [];
-  for(let i = 0; i < loans.length; i++) {
-    loanBtns.push(<button type="button" className="btn btn-primary loan-button" style={{backgroundImage: `url(${loans[i].iconUrl})`}} key={loans[i].id} onClick={() => onLoanSelected(loans[i].id)}>{loans[i].name}</button>)
+  console.log("Loan type selector!");
+  console.log(loan.eligibleLoanTypes);
+  const loanTypeBtns = [];
+  for(let i = 0; i < loan.eligibleLoanTypes.length; i++) {
+    loanTypeBtns.push(<button type="button" className="btn btn-primary" key={loan.eligibleLoanTypes[i].id} onClick={() => onLoanTypeSelected(i)}>{loan.eligibleLoanTypes[i].name}</button>)
   }
 
   return(
     <>
     <div className="btn-group" role="group">
-      { loanBtns }
+      { loanTypeBtns }
     </div>
     </>
   )

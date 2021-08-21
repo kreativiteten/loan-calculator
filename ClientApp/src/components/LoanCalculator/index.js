@@ -1,17 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { calculateMonthlyPayment } from '../../utils/loan';
+import React, { useState } from 'react';
+import Amortized from './amortized';
+import Serial from './serial';
+import LoanSelector from './loanSelector';
 import LoanTypeSelector from './loanTypeSelector';
+import { loanTypes } from '../../utils/loan';
 
 const LoanCalculator = ({loans}) => {
 
   const [loan, setLoan] = useState(null);
   const [amount, setAmount] = useState(5000);
   const [months, setMonths] = useState(5);
+  const [loanMode, setLoanMode] = useState(0); // Which index of the EligibleLoanTypes array to use
 
 
   const updateSelectedLoan = (newLoanId) => {
-    const newLoan = loans.find(l => l.id == newLoanId);
+    const newLoan = loans.find(l => l.id === newLoanId);
     if(newLoan) {
+      setLoanMode(0); // Reset to loan type 0
       setLoan(newLoan);
       setAmount(newLoan.defaultAmount);
       setMonths(newLoan.defaultMonths);
@@ -21,25 +26,19 @@ const LoanCalculator = ({loans}) => {
   }
 
   if(loan === null) {
-    return <div><LoanTypeSelector loans={loans} onLoanSelected={updateSelectedLoan} /></div>
+    return <div><LoanSelector loans={loans} onLoanSelected={updateSelectedLoan} /></div>
   }
   
-  
-  const perMonth = calculateMonthlyPayment(amount, loan.interest, months);
-  const graph = [];
-  let debt = amount;
-  for(let i = 0; i < months; i++) {
-    debt += debt / 100 * (loan.interest / 12);
-    debt -= perMonth;
-
-    graph.push(<div key={debt.toString() + i.toString()} className="bar">
-      <div style={{flex: amount - debt, backgroundColor: "white"}}></div>
-      <div style={{flex: debt, backgroundColor: "black"}}></div>
-    </div>)
-  }
+  let paymentPlanComponent = null;
+  if(loan.eligibleLoanTypes[loanMode].eligibleLoanType == loanTypes.AMORTIZED) 
+    paymentPlanComponent = <Amortized amount={amount} interest={loan.interest} months={months} />;
+  else if (loan.eligibleLoanTypes[loanMode].eligibleLoanType == loanTypes.SERIAL)
+    paymentPlanComponent = <Serial amount={amount} interest={loan.interest} months={months} />;
+  else
+    paymentPlanComponent = <div>Invalid payment plan.</div>;
 
   return (<>
-      <div><LoanTypeSelector loans={loans} onLoanSelected={updateSelectedLoan} /></div>
+      <div><LoanSelector loans={loans} onLoanSelected={updateSelectedLoan} /></div>
       <div>
         <h1>
           LoanCalculator { loan.name }
@@ -60,15 +59,12 @@ const LoanCalculator = ({loans}) => {
           Interest: {loan.interest}%
         </div>
         <div>
-          Payment per month: { perMonth.toFixed(2) }$
+          <div>
+          Payback scheme: { loan.eligibleLoanTypes[loanMode].name }
+          </div>
+          <LoanTypeSelector loan={loan} onLoanTypeSelected={setLoanMode} />
         </div>
-        <div>
-          Total cost: { (perMonth * months).toFixed(2) }$
-        </div>
-
-        <div className="simple-graph">
-          {graph}
-        </div>
+        { paymentPlanComponent }
       </div>
     </>);
 }
