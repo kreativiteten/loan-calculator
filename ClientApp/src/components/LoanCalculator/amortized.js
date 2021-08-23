@@ -5,8 +5,8 @@ const amortized = ({ amount, interest, months }) => {
   const perMonth = calculateMonthlyPaymentAmortized(amount, interest, months);
   return (
     <>
-      <div>Payment per month: {perMonth.toFixed(2)}$</div>
       <div>Total cost: {(perMonth * months).toFixed(2)}$</div>
+      <div>Payment per month: {perMonth.toFixed(2)}$</div>
     </>
   );
 };
