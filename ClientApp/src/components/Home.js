@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import LoanCalculator from './LoanCalculator';
+import React, { useState, useEffect } from "react";
+import LoanCalculator from "./LoanCalculator";
 
 const Home = () => {
   const [loans, setLoans] = useState([]);
@@ -15,13 +15,12 @@ const Home = () => {
     fetchLoans();
   }, []);
 
-  return(
+  return (
     <div>
-      { loading ? "Loading..." : null }
+      {loading ? "Loading..." : null}
       <LoanCalculator loans={loans} />
     </div>
-  )
-}
-
+  );
+};
 
 export default Home;
